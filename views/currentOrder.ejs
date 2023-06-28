@@ -1,0 +1,51 @@
+<%- include('header'); -%>
+
+	<div class="container mt-5">
+		<h1>Bill</h1>
+		<h4>Order ID:<%=order._id%></h4>
+        <h4>Customer Mob No :<%=mobileNumber%></h4>
+		
+		<hr>
+
+		<% if (!order) { %>
+			<div class="alert alert-warning">No orders found for this mobile number.</div>
+		<% } else { %>
+			<div class="alert alert-success">Order placed successfully!</div>
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="bg-dark text-light">Item Name</th>
+						<th class="bg-dark text-light">Quantity</th>
+						<th class="bg-dark text-light">Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% order.items.forEach(function(item) { %>
+						<tr>
+							<td><%= item.name %></td>
+							<td><%= item.qty %></td>
+							<td><%= item.price %></td>
+						</tr>
+					<% }); %>
+				</tbody>
+			</table>
+
+			<div class="alert alert-info">Total Price: <%= order.items.reduce((total, item) => total + item.price, 0) %></div>
+		<% } %>
+
+	<div class="row">
+		<div class="col-sm"><a href="/"><button class="btn btn-primary">Back to home</button></a></div>
+		<div class="col-sm"><button class="btn btn-primary" onclick="showAlert()">Paid By Cash</button></div>
+		<div class="col-sm"><a href="/payment"><button class="btn btn-primary">Pay Online</button></a></div>
+	</div>
+	</div>
+	
+	<script>
+		function showAlert() {
+			alert("Payment is done By cash Click OK to continue");
+			window.location.href = "/";
+		}
+	</script>
+	
+	<%- include("footer") -%>
